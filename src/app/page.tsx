@@ -1,13 +1,11 @@
 'use client'
 
-import Image from "next/image";
 import { useEffect, useState } from 'react';
 import { fetchCoronaData } from './utils/api';
-import imgExport from './icons/download.svg';
-import imgNotes from './icons/notes.svg';
-import imgFilter from './icons/filter.svg';
 import Card from './ui/card';
 import imgAvatar from './icons/avatar.svg';
+import { Button } from "antd";
+import { DownloadOutlined, WifiOutlined, AlignLeftOutlined} from '@ant-design/icons';
 
 export default function Home() {
   const [pageTitle, setPageTitle] = useState<string>("Page title");
@@ -39,20 +37,20 @@ export default function Home() {
       <div className="flex justify-between items-center w-full px-4">
         <h1 className="text-md">{pageTitle}</h1>
         <div className="flex items-center space-x-4">
-          <button className="flex items-center space-x-2 px-3 py-2 rounded-md text-black bg-white gap-2" title="Export page as PDF file">
+          <Button className="flex items-center space-x-2 px-3 py-2 rounded-md text-black bg-white gap-2" title="Export page as PDF file">
             Export to PDF
-            <Image src={imgExport.src} alt="Export" className="svg-image svg-green" width="16" height="16"/>
-          </button>
-          <button className="flex items-center space-x-2 px-3 py-2 rounded-md text-black bg-white gap-2" title={getPageNotesTitle()}>
+            <DownloadOutlined className="svg-image svg-green" style={{fontSize: '24px'}}/>
+          </Button>
+          <Button className="flex items-center space-x-2 px-3 py-2 rounded-md text-black bg-white gap-2" title={getPageNotesTitle()}>
             Notes 
             <span className="ml-1 rounded-full text-slate-300">({pageNotes})</span>
-            <Image src={imgNotes.src} alt="Notes" className="svg-image svg-green" width="16" height="16"/>
-          </button>
-          <button className="flex items-center space-x-2 px-3 py-2 rounded-md text-black bg-white gap-2" title="Filter items">
+            <AlignLeftOutlined className="svg-image svg-green" style={{fontSize: '24px'}}/>
+          </Button>
+          <Button className="flex items-center space-x-2 px-3 py-2 rounded-md text-black bg-white gap-2" title="Filter items">
             Filter
             <span className="ml-1 text-xs font-semibold bg-gray-200 text-gray-800 rounded-full px-2 py-1">9+</span>
-            <Image src={imgFilter.src} alt="Filter" className="svg-image svg-green" width="16" height="16"/>
-          </button>
+            <WifiOutlined className="svg-image svg-green" style={{fontSize: '24px'}} rotate={0}/>
+          </Button>
         </div>
       </div>
       <div className="flex w-full h-full justify-center gap-8 flex-row">

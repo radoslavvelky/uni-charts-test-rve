@@ -1,8 +1,6 @@
 import Image from 'next/image';
-import imgComment from '../icons/comment.svg';
-import imgHeart from '../icons/heart.svg';
-import imgEmptyHeart from '../icons/empty-heart.svg';
 import { useEffect, useState } from 'react';
+import { HeartOutlined, HeartFilled, TwitchOutlined } from '@ant-design/icons';
 
 interface CardProps {
   title: string;
@@ -40,12 +38,16 @@ const Card: React.FC<CardProps> = ({ title, graph, avatar, comments }) => {
         <div className="flex items-center" title={getAvatarTitle()}>
           <Image src={avatar} alt="User avatar" className="svg-image" width="24" height="24" />
         </div>
-        <div className="flex items-center" title={getHeartTitle()} onClick={() => handleHeart(!useHeart)}>
-          <Image src={useHeart ? imgHeart.src : imgEmptyHeart.src} alt="Heart" className="svg-image" width="20" height="20" />
+        <div className="flex items-center cursor-pointer" title={getHeartTitle()} onClick={() => handleHeart(!useHeart)}>
+          {!useHeart ?
+            <HeartOutlined className="svg-image svg-red" style={{fontSize: '24px'}}/> 
+            :
+            <HeartFilled className="svg-image svg-red" style={{fontSize: '24px'}}/>
+          }
         </div>
         <div className="flex items-center gap-2" title={getCommentTitle()}>
-          <span className="ml-2 text-sm font-semibold">{comments}</span>
-          <Image src={imgComment.src} alt="User avatar" className="svg-image" width="24" height="24" />
+          <span className="ml-2 text-sm font-semibold text-slate-400">{comments}</span>
+          <TwitchOutlined className="svg-image svg-gray" style={{fontSize: '24px'}}/>
         </div>
       </div>
     </div>

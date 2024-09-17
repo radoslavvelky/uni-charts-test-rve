@@ -27,10 +27,18 @@ body {
 }
 
 .svg-image {
-  width: 24px;
-  height: 24px;
+  width: 24px !important;
+  height: 24px !important;
 }
 
 .svg-green {
   filter: brightness(0) saturate(100%) invert(60%) sepia(9%) saturate(2245%) hue-rotate(76deg) brightness(97%) contrast(87%);
+}
+
+.svg-red {
+  filter: brightness(0) saturate(100%) invert(19%) sepia(100%) saturate(6260%) hue-rotate(355deg) brightness(114%) contrast(118%);
+}
+
+.svg-gray {
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(6025%) hue-rotate(43deg) brightness(107%) contrast(62%);
 }
