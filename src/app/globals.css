@@ -25,3 +25,12 @@ body {
     text-wrap: balance;
   }
 }
+
+.svg-image {
+  width: 24px;
+  height: 24px;
+}
+
+.svg-green {
+  filter: brightness(0) saturate(100%) invert(60%) sepia(9%) saturate(2245%) hue-rotate(76deg) brightness(97%) contrast(87%);
+}
