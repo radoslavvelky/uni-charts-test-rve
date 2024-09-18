@@ -1,17 +1,24 @@
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import { HeartOutlined, HeartFilled, TwitchOutlined } from '@ant-design/icons';
+'use client'
+
+import { useState } from 'react';
+import { HeartOutlined, HeartFilled, TwitchOutlined, QuestionCircleOutlined  } from '@ant-design/icons';
+import { Avatar } from "antd";
+import { UserOutlined } from '@ant-design/icons';
+import Chart from './chart'; // Import the Chart component
+import {ChartType} from '../utils/definition';
 
 interface CardProps {
+  id: string;
   title: string;
-  graph: string;
-  avatar: string;
+  chartData: any[];
+  chartType: ChartType;
   comments: number;
 }
 
-const Card: React.FC<CardProps> = ({ title, graph, avatar, comments }) => {
+const Card: React.FC<CardProps> = ({ id, title, chartData, chartType, comments }) => {
   const [useHeart, setUseHeart] = useState<boolean>(false);
 
+  //Get Titles
   function getCommentTitle(): string {
     return comments + ' comments for chart';
   }
@@ -32,11 +39,12 @@ const Card: React.FC<CardProps> = ({ title, graph, avatar, comments }) => {
       <div className="px-4 py-2 border-b border-solid border-slate-200">
         <h2 className="text-lg font-semibold">{title}</h2>        
       </div>
-      <div className="flex items-center justify-between px-4 py-2">
+      <div className="flex items-center justify-between px-4 py-2 w-full h-full">
+          <Chart type={chartType} data={chartData} id={id}/>
       </div>
-      <div className="flex items-center justify-between px-4 py-2 bg-gray-100">
+      <div className="flex items-center justify-between px-4 py-2 bg-gray-100 select-none">
         <div className="flex items-center" title={getAvatarTitle()}>
-          <Image src={avatar} alt="User avatar" className="svg-image" width="24" height="24" />
+          <Avatar icon={<UserOutlined />} />
         </div>
         <div className="flex items-center cursor-pointer" title={getHeartTitle()} onClick={() => handleHeart(!useHeart)}>
           {!useHeart ?
@@ -47,7 +55,7 @@ const Card: React.FC<CardProps> = ({ title, graph, avatar, comments }) => {
         </div>
         <div className="flex items-center gap-2" title={getCommentTitle()}>
           <span className="ml-2 text-sm font-semibold text-slate-400">{comments}</span>
-          <TwitchOutlined className="svg-image svg-gray" style={{fontSize: '24px'}}/>
+              <TwitchOutlined className="svg-image svg-gray" style={{fontSize: '24px'}}/>                   
         </div>
       </div>
     </div>

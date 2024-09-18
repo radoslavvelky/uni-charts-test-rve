@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { fetchCoronaData } from './utils/api';
+import {ChartType} from './utils/definition';
 import Card from './ui/card';
-import imgAvatar from './icons/avatar.svg';
 import { Button } from "antd";
 import { DownloadOutlined, WifiOutlined, AlignLeftOutlined} from '@ant-design/icons';
 
@@ -11,8 +11,8 @@ export default function Home() {
   const [pageTitle, setPageTitle] = useState<string>("Page title");
   const [pageNotes, setPageNotes] = useState<number>(3);
   const chartTitle = "Chart Title";
-  const graphText = "Graph";
 
+  //onInit
   useEffect(() => {
     async function fetchData() {
       console.log('Fetching data 1');
@@ -28,9 +28,28 @@ export default function Home() {
     fetchData();
   }, []);
 
+  //set Title
   function getPageNotesTitle(): string {
     return pageNotes + " notes for this page";
   }
+
+  const graphData1 = [
+    { time: "10:10", call: 4, waiting: -122, people: 122 },
+    { time: "10:15", call: 2, waiting: 6, people: 3 },
+    { time: "10:20", call: 13, waiting: 2, people: 5 },
+    { time: "10:25", call: 9, waiting: 9, people: 1 },
+    { time: "10:30", call: 5, waiting: 2, people: 3 },
+    { time: "10:35", call: 8, waiting: 2, people: 1 },
+    { time: "10:40", call: 13, waiting: 1, people: 2 }
+  ];       
+
+  const graphData2 = [
+    { genre: "Sports", sold: 275 },
+    { genre: "Strategy", sold: 115 },
+    { genre: "Action", sold: 120 },
+    { genre: "Shooter", sold: 350 },
+    { genre: "Other", sold: 150 }
+  ];  
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 bg-gray-100 sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -54,9 +73,9 @@ export default function Home() {
         </div>
       </div>
       <div className="flex w-full h-full justify-center gap-8 flex-row">
-        <Card title={chartTitle} graph={graphText} avatar={imgAvatar.src} comments={3}>
+        <Card title={chartTitle} chartData={graphData1} chartType={ChartType.chartType1} comments={3} id="1">
         </Card>
-        <Card title={chartTitle} graph={graphText} avatar={imgAvatar.src} comments={5}>
+        <Card title={chartTitle} chartData={graphData2} chartType={ChartType.chartType2} comments={5} id="2">
         </Card>
       </div>
     </div>
