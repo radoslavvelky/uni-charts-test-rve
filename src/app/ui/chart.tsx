@@ -11,18 +11,12 @@ interface ChartProps {
 }
 
 const ChartComponent: React.FC<ChartProps> = ({ type, data, id}) => {
-    const elId = "chart-" + id;
-    let g2Chart: Chart | null = null;
+    const [g2Chart, setG2Chart] = useState<Chart | null>(null);
+    const elId = "chart-" + id;    
 
     //onIinit
     useEffect(() => {
-        g2Chart = new Chart({ 
-            container: elId, 
-            forceFit: true,
-            height: 500
-        });
-        
-        
+        createChart();
     }, []);
 
     //onChange data
@@ -31,7 +25,7 @@ const ChartComponent: React.FC<ChartProps> = ({ type, data, id}) => {
     }, [data]);
 
     //onChange type
-    useEffect(() => {
+    useEffect(() => {        
         if (type === ChartType.chartType1) {
             initChartType1();
         } else {
@@ -42,104 +36,94 @@ const ChartComponent: React.FC<ChartProps> = ({ type, data, id}) => {
     //onDestroy
     useEffect(() => {
         return () => {
+          console.log("Destroy Chart id: ", id);
           destroyChart();
         };
     }, []);
 
+    //init chart
+    function createChart() {
+        const chart = new Chart({ 
+            container: elId, 
+            forceFit: true,
+            height: 500
+        });        
+        setG2Chart(chart);
+    }
+
     //update chart data
     function updateChartData(newData: any[]) {
-        if (!g2Chart) {
-            return;
+        console.log("updateChartData newData: ", newData);
+        console.log("updateChartData g2Chart: ", g2Chart);                
+        if (type === ChartType.chartType1) {
+            initChartType1();
+        } else {
+            initChartType2();
         }
-
-        g2Chart.changeData(data);
     }
 
     //init Chart type 1
     function initChartType1() {
+        console.log("initChartType1");
         if (!g2Chart) {
             return;
         }
+        console.log("initChartType1.1");
     
         g2Chart.source(data, {
             sync: true,
             call: {
               tickCount: 5
             },
-            waiting: {
-              tickCount: 5
-            },
-            people: {
-              tickCount: 5
-            }
         });
 
         g2Chart.legend({
             custom: 1,
-            items: [
-              {
-                value: "waiting",
-                marker: { symbol: "square", fill: "#008fff", radius: 5 }
-              },
-              {
-                value: "people",
-                marker: { symbol: "hyphen", stroke: "#ff3f00", radius: 5, lineWidth: 2 }
-              }
-            ]
         });
         g2Chart
-            .interval()
-            .position("time*waiting")
-            .color("#008fff");
-        g2Chart
             .line()
-            .position("time*people")
+            .position("date*metric_value")
             .color("#ff3f00")
             .size(3)
             .shape("smooth");
         g2Chart
             .point()
-            .position("time*people")
+            .position("date*metric_value")
             .color("#ff3f00")
             .size(3)
-            .shape("circle");          
+            .shape("circle");  
     
         g2Chart.render();
     }
 
     //init Chart type 2
     function initChartType2() {
+        console.log("initChartType2");
         if (!g2Chart) {
             return;
         }
+        console.log("initChartType2.1");
 
         g2Chart.source(data, {
             sync: true,
             call: {
-              tickCount: 5
-            },
-            waiting: {
-              tickCount: 5
-            },
-            people: {
-              tickCount: 5
-            }
+                tickCount: 5
+              },  
         });
     
         g2Chart
-        .interval() // chart.[mark]()
-        .position("genre*sold")
-        .color("genre"); // node.encode()        
-        
+            .interval() 
+            .position("date*metric_value")
+            .color("metric_value");    
         g2Chart.render();
     }
 
     //clear Chart
     function destroyChart() {
         if (g2Chart)   {
+            console.log("destroyChart");
             g2Chart.destroy();
-            //setG2Chart(null);
-            g2Chart = null;
+            setG2Chart(null);
         }
     }
 
