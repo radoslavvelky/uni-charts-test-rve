@@ -1,11 +1,12 @@
-'use client'
+'use client';
 
 import { useState } from 'react';
-import { HeartOutlined, HeartFilled, TwitchOutlined, QuestionCircleOutlined  } from '@ant-design/icons';
+import { HeartOutlined, HeartFilled, TwitchOutlined } from '@ant-design/icons';
 import { Avatar } from "antd";
 import { UserOutlined } from '@ant-design/icons';
 import Chart from './chart'; // Import the Chart component
-import {ChartType} from '../utils/definition';
+import {ChartType, Favour} from '../utils/definition';
+import {updateFavourGraph} from '../utils/api';
 
 interface CardProps {
   id: string;
@@ -31,7 +32,13 @@ const Card: React.FC<CardProps> = ({ id, title, chartData, chartType, comments }
   }
 
   function handleHeart(state: boolean) {
-    setUseHeart(state);
+    updateFavourGraph(id, state).then((favour: Favour) => {
+        setUseHeart(favour.isFavour);
+        console.log("Favour updated to: ", favour.chartId, favour.isFavour);
+    })
+    .catch (error => {
+        console.error("Failed to update favorite graph: ", error);
+    });   
   }
 
   return (

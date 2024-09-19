@@ -16,9 +16,6 @@ export default function RootLayout({
       <body
         className={`antialiased`}
       >
-        <header className="flex h-12 items-center bg-white text-black pl-20 shadow-2xl">
-          <h1 className="text-md font-bold">App title</h1>
-        </header>
         {children}
       </body>
     </html>
